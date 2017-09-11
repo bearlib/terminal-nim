@@ -1,2 +1,2 @@
-# terminal-nim
+# BearLibTerminal.nim
 Nim bindings
