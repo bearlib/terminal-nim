@@ -196,7 +196,7 @@ type
 
 # Open
 
-proc terminal_open*(): int {.importc: "terminal_open", dynlib: "BearLibTerminal.dll".}
+proc terminal_open*(): int {.discardable, importc: "terminal_open", dynlib: "BearLibTerminal.dll".}
 
 # Close
 
@@ -210,10 +210,10 @@ proc terminal_set16*(value: ptr int16): int {.importc: "terminal_set16", dynlib:
 
 proc terminal_set32*(value: ptr int32): int {.importc: "terminal_set32", dynlib: "BearLibTerminal.dll".}
 
-proc terminal_set*(s: cstring): int {.inline.} =
+proc terminal_set*(s: cstring): int {.discardable, inline.} =
   return terminal_set8(cast[ptr int8](s))
 
-proc terminal_setf*(s: string, args: varargs[string, `$`]): int {.inline.} =
+proc terminal_setf*(s: string, args: varargs[string, `$`]): int {.discardable, inline.} =
   result = terminal_set(format(s, args))
 
 # Refresh
@@ -234,16 +234,16 @@ proc terminal_print_ext16*(x, y, w, h, align: int; value: ptr int16; out_w, out_
 
 proc terminal_print_ext32*(x, y, w, h, align: int; value: ptr int32; out_w, out_h: ptr int) {.importc: "terminal_print_ext32", dynlib: "BearLibTerminal.dll".}
 
-proc terminal_print_ext*(x, y, w, h, align: int; s: cstring): dimensions_t {.inline.} =
+proc terminal_print_ext*(x, y, w, h, align: int; s: cstring): dimensions_t {.discardable, inline.} =
   terminal_print_ext8(x, y, w, h, align, cast[ptr int8](s), addr(result.width), addr(result.height))
   
-proc terminal_print*(x, y: int; s: cstring): dimensions_t {.inline.} =
+proc terminal_print*(x, y: int; s: cstring): dimensions_t {.discardable, inline.} =
   return terminal_print_ext(x, y, 0, 0, TK_ALIGN_DEFAULT, s)
 
-proc terminal_printf*(x, y: int, s: string, args: varargs[string, `$`]): dimensions_t {.inline.} =
+proc terminal_printf*(x, y: int, s: string, args: varargs[string, `$`]): dimensions_t {.discardable, inline.} =
   return terminal_print(x, y, format(s, args))
 
-proc terminal_printf_ext*(x, y, w, h, align: int, s: string, args: varargs[string, `$`]): dimensions_t {.inline.} =
+proc terminal_printf_ext*(x, y, w, h, align: int, s: string, args: varargs[string, `$`]): dimensions_t {.discardable, inline.} =
   return terminal_print_ext(x, y, w, h, align, format(s, args))
 
 # Read
@@ -261,12 +261,12 @@ proc terminal_read_str*(x, y: int; s: cstring; max: int): int {.inline.} =
 
 # Measure
 
-proc terminal_measure_ext8*(w, h: int; value: ptr int8; out_w, out_h: ptr int) {.importc: "terminal_measure_ext8", dynlib: libname.}
+proc terminal_measure_ext8*(w, h: int; value: ptr int8; out_w, out_h: ptr int) {.importc: "terminal_measure_ext8", dynlib: "BearLibTerminal.dll".}
 
-proc terminal_measure_ext16*(w, h: int; value: ptr int16; out_w, out_h: ptr int) {.importc: "terminal_measure_ext16", dynlib: libname.}
+proc terminal_measure_ext16*(w, h: int; value: ptr int16; out_w, out_h: ptr int) {.importc: "terminal_measure_ext16", dynlib: "BearLibTerminal.dll".}
 
-proc terminal_measure_ext32*(w, h: int; value: ptr int32; out_w, out_h: ptr int) {.importc: "terminal_measure_ext32", dynlib: libname.}
-	
+proc terminal_measure_ext32*(w, h: int; value: ptr int32; out_w, out_h: ptr int) {.importc: "terminal_measure_ext32", dynlib: "BearLibTerminal.dll".}
+
 proc terminal_measure_ext*(w, h: int, s: cstring): dimensions_t {.inline.} =
   terminal_measure_ext8(w, h, cast[ptr int8](s), addr(result.width), addr(result.height))
 
