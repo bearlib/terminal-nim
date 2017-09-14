@@ -1,5 +1,5 @@
 # BearLibTerminal
-# Copyright (C) 2017 Apromix
+# Copyright (C) 2017 Zacharycarter, Apromix
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -275,3 +275,14 @@ proc terminal_measure*(s: cstring): dimensions_t {.inline.} =
 
 proc terminal_measuref*(s: string, args: varargs[string, `$`]): dimensions_t {.inline.} =
   return terminal_measure(format(s, args))
+
+# Get
+
+proc terminal_get8*(key, def: ptr int8): ptr int8 {.importc: "terminal_get8", dynlib: "BearLibTerminal.dll".}
+
+proc terminal_get16*(key, def: ptr int16): ptr int16 {.importc: "terminal_get16", dynlib: "BearLibTerminal.dll".}
+
+proc terminal_get32*(key, def: ptr int32): ptr int32 {.importc: "terminal_get32", dynlib: "BearLibTerminal.dll".}
+
+proc terminal_get*(key: cstring; default: cstring = cast[cstring](0)): cstring {.inline.} =
+  return cast[cstring](terminal_get8(cast[ptr int8](key), cast[ptr int8](default)))
