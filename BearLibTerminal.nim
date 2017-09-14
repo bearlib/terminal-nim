@@ -190,9 +190,9 @@ const
 type
   color_t* = uint32
 
-  dimensions_t* = object
-    width*: int
-    height*: int  
+  dimensions_t* = tuple
+    width: int
+    height: int  
 
 # Open
 
