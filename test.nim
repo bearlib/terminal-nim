@@ -2,17 +2,9 @@ import BearLibTerminal
 
 discard terminal_open()
 
-discard terminal_print(1, 1, "Hello world![color=dark gray]ппррыыыіііїїїї")
+discard terminal_set("window.title='Hello world'")
 
-discard terminal_print(1, 3, """
-   ┌────────┐  
-   │!......s└─┐
-┌──┘........s.│
-│............>│
-│...........┌─┘
-│<.@..┌─────┘  
-└─────┘        
-""")
+discard terminal_print(1, 1, "[color=yellow]Hello world![/color]")
 
 terminal_refresh()
 

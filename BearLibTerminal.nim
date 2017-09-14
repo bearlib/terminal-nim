@@ -18,9 +18,11 @@
 # IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 # CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-const
+import strutils
 
 # Keyboard scancodes for events/states.
+
+const
   TK_A*               = 0x04
   TK_B*               = 0x05
   TK_C*               = 0x06
@@ -118,6 +120,8 @@ const
   TK_ALT*             = 0x72
 
 # Mouse events/states.
+
+const
   TK_MOUSE_LEFT*      = 0x80 # Buttons
   TK_MOUSE_RIGHT*     = 0x81
   TK_MOUSE_MIDDLE*    = 0x82
@@ -133,10 +137,14 @@ const
   TK_MOUSE_CLICKS*    = 0x8C # Number of consecutive clicks
 
 # If key was released instead of pressed, it's code will be OR'ed with VK_KEY_RELEASED.
+
+const
   TK_KEY_RELEASED*    = 0x100
 
 # Virtual key-codes for internal terminal states/variables.
 # These can be accessed via terminal_state function.
+
+const
   TK_WIDTH*           = 0xC0 # Terminal width in cells
   TK_HEIGHT*          = 0xC1 # Terminal height in cells
   TK_CELL_WIDTH*      = 0xC2 # Cell width in pixels
@@ -151,18 +159,26 @@ const
   TK_FULLSCREEN*      = 0xCB # Fullscreen state
 
 # Other events.
+
+const
   TK_CLOSE*           = 0xE0
   TK_RESIZED*         = 0xE1
 
 # Generic mode enum. Used in Terminal.composition call only.
+
+const
   TK_OFF*             =    0
   TK_ON*              =    1
 
 # Input result codes for terminal_read_str function.
+
+const
   TK_INPUT_NONE*      =    0
   TK_INPUT_CANCELLED* =   -1
 
 # Text printing alignment.
+
+const
   TK_ALIGN_DEFAULT*   =    0
   TK_ALIGN_LEFT*      =    1
   TK_ALIGN_RIGHT*     =    2
@@ -178,19 +194,38 @@ type
     width*: int
     height*: int  
 
-# Open  
+# Open
+
 proc terminal_open*(): int {.importc: "terminal_open", dynlib: "BearLibTerminal.dll".}
 
 # Close
+
 proc terminal_close*() {.importc: "terminal_close", dynlib: "BearLibTerminal.dll".}
 
+# Set
+
+proc terminal_set8*(value: ptr int8): int {.importc: "terminal_set8", dynlib: "BearLibTerminal.dll".}
+
+proc terminal_set16*(value: ptr int16): int {.importc: "terminal_set16", dynlib: "BearLibTerminal.dll".}
+
+proc terminal_set32*(value: ptr int32): int {.importc: "terminal_set32", dynlib: "BearLibTerminal.dll".}
+
+proc terminal_set*(s: cstring): int {.inline.} =
+  return terminal_set8(cast[ptr int8](s))
+
+proc terminal_setf*(s: string, args: varargs[string, `$`]): int =
+  result = terminal_set(format(s, args))
+
 # Refresh
+
 proc terminal_refresh*() {.importc: "terminal_refresh", dynlib: "BearLibTerminal.dll".}
 
 # Clear
+
 proc terminal_clear*() {.importc: "terminal_clear", dynlib: "BearLibTerminal.dll".}
 
 # Print
+
 proc terminal_print_ext8*(x: int; y: int; w: int; h: int; align: int; s: ptr int8; out_w: ptr int; out_h: ptr int) {.importc: "terminal_print_ext8", dynlib: "BearLibTerminal.dll".}
 
 proc terminal_print_ext*(x, y, w, h: int, alignment: int, s: cstring) : dimensions_t =
@@ -200,4 +235,5 @@ proc terminal_print*(x: int; y: int; s: cstring): dimensions_t {.inline.} =
   return terminal_print_ext(x, y, 0, 0, TK_ALIGN_DEFAULT, s)
 
 # Read
+
 proc terminal_read*(): int {.importc: "terminal_read", dynlib: "BearLibTerminal.dll".}
