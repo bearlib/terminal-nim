@@ -200,7 +200,7 @@ proc terminal_open*(): int {.discardable, importc: "terminal_open", dynlib: "Bea
 
 # Close
 
-proc terminal_close*() {.importc: "terminal_close", dynlib: "BearLibTerminal.dll".}
+proc terminal_close*() {.noReturn, importc: "terminal_close", dynlib: "BearLibTerminal.dll".}
 
 # Set
 
@@ -218,13 +218,13 @@ proc terminal_setf*(s: string, args: varargs[string, `$`]): int {.discardable, i
 
 # Refresh
 
-proc terminal_refresh*() {.importc: "terminal_refresh", dynlib: "BearLibTerminal.dll".}
+proc terminal_refresh*() {.noReturn, importc: "terminal_refresh", dynlib: "BearLibTerminal.dll".}
 
 # Clear
 
-proc terminal_clear*() {.importc: "terminal_clear", dynlib: "BearLibTerminal.dll".}
+proc terminal_clear*() {.noReturn, importc: "terminal_clear", dynlib: "BearLibTerminal.dll".}
 
-proc terminal_clear_area*(x, y, w, h: int) {.importc: "terminal_clear_area", dynlib: "BearLibTerminal.dll".}
+proc terminal_clear_area*(x, y, w, h: int) {.noReturn, importc: "terminal_clear_area", dynlib: "BearLibTerminal.dll".}
 
 # Print
 
