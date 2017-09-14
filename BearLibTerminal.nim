@@ -224,15 +224,27 @@ proc terminal_refresh*() {.importc: "terminal_refresh", dynlib: "BearLibTerminal
 
 proc terminal_clear*() {.importc: "terminal_clear", dynlib: "BearLibTerminal.dll".}
 
+proc terminal_clear_area*(x, y, w, h: int) {.importc: "terminal_clear_area", dynlib: "BearLibTerminal.dll".}
+
 # Print
 
-proc terminal_print_ext8*(x: int; y: int; w: int; h: int; align: int; s: ptr int8; out_w: ptr int; out_h: ptr int) {.importc: "terminal_print_ext8", dynlib: "BearLibTerminal.dll".}
+proc terminal_print_ext8*(x, y, w, h, align: int; s: ptr int8; out_w, out_h: ptr int) {.importc: "terminal_print_ext8", dynlib: "BearLibTerminal.dll".}
 
-proc terminal_print_ext*(x, y, w, h: int, alignment: int, s: cstring) : dimensions_t =
-  terminal_print_ext8(x, y, w, h, alignment, cast[ptr int8](s), addr(result.width), addr(result.height))
+proc terminal_print_ext16*(x, y, w, h, align: int; s: ptr int16; out_w, out_h: ptr int) {.importc: "terminal_print_ext16", dynlib: "BearLibTerminal.dll".}
+
+proc terminal_print_ext32*(x, y, w, h, align: int; s: ptr int32; out_w, out_h: ptr int) {.importc: "terminal_print_ext32", dynlib: "BearLibTerminal.dll".}
+
+proc terminal_print_ext*(x, y, w, h, align: int; s: cstring): dimensions_t =
+  terminal_print_ext8(x, y, w, h, align, cast[ptr int8](s), addr(result.width), addr(result.height))
   
-proc terminal_print*(x: int; y: int; s: cstring): dimensions_t {.inline.} =
+proc terminal_print*(x, y: int; s: cstring): dimensions_t {.inline.} =
   return terminal_print_ext(x, y, 0, 0, TK_ALIGN_DEFAULT, s)
+
+proc terminal_printf*(x, y: int, s: string, args: varargs[string, `$`]): dimensions_t =
+  return terminal_print(x, y, format(s, args))
+
+proc terminal_printf_ext*(x, y, w, h, align: int, s: string, args: varargs[string, `$`]): dimensions_t =
+  return terminal_print_ext(x, y, w, h, align, format(s, args))
 
 # Read
 
