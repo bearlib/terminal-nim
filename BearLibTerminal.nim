@@ -226,6 +226,12 @@ proc terminal_clear*() {.noReturn, importc: "terminal_clear", dynlib: "BearLibTe
 
 proc terminal_clear_area*(x, y, w, h: int) {.noReturn, importc: "terminal_clear_area", dynlib: "BearLibTerminal.dll".}
 
+# Put
+
+proc terminal_put*(x, y, code: int) {.noReturn, importc: "terminal_put", dynlib: "BearLibTerminal.dll".}
+
+proc terminal_put_ext*(x, y, dx, dy, code: int; corners: ptr color_t) {.noReturn, importc: "terminal_put_ext", dynlib: "BearLibTerminal.dll".}
+
 # Print
 
 proc terminal_print_ext8*(x, y, w, h, align: int; value: ptr int8; out_w, out_h: ptr int) {.importc: "terminal_print_ext8", dynlib: "BearLibTerminal.dll".}
