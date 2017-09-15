@@ -290,6 +290,12 @@ proc terminal_measuref*(s: string, args: varargs[string, `$`]): dimensions_t {.i
 
 proc terminal_state*(code: int): int {.importc: "terminal_state", dynlib: "BearLibTerminal.dll".}  
 
+# Peek
+
+proc terminal_peek*(): int {.importc: "terminal_peek", dynlib: "BearLibTerminal.dll".}
+
+proc terminal_delay*(value: int) {.noReturn, importc: "terminal_delay", dynlib: "BearLibTerminal.dll".}
+
 # Get
 
 proc terminal_get8*(key, def: ptr int8): ptr int8 {.importc: "terminal_get8", dynlib: "BearLibTerminal.dll".}
