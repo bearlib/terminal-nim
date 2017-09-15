@@ -282,6 +282,8 @@ proc terminal_measure*(s: cstring): dimensions_t {.inline.} =
 proc terminal_measuref*(s: string, args: varargs[string, `$`]): dimensions_t {.inline.} =
   return terminal_measure(format(s, args))
 
+proc terminal_state*(code: int): int {.importc: "terminal_state", dynlib: "BearLibTerminal.dll".}  
+
 # Get
 
 proc terminal_get8*(key, def: ptr int8): ptr int8 {.importc: "terminal_get8", dynlib: "BearLibTerminal.dll".}
@@ -292,3 +294,24 @@ proc terminal_get32*(key, def: ptr int32): ptr int32 {.importc: "terminal_get32"
 
 proc terminal_get*(key: cstring; default: cstring = cast[cstring](0)): cstring {.inline.} =
   return cast[cstring](terminal_get8(cast[ptr int8](key), cast[ptr int8](default)))
+
+# Color
+
+proc terminal_color*(color: color_t) {.noReturn, importc: "terminal_color", dynlib: "BearLibTerminal.dll".}
+
+proc terminal_bkcolor*(color: color_t) {.noReturn, importc: "terminal_bkcolor", dynlib: "BearLibTerminal.dll".}
+
+proc color_from_name8*(name: ptr int8): color_t {.importc: "color_from_name8", dynlib: "BearLibTerminal.dll".}
+
+proc color_from_name16*(name: ptr int16): color_t {.importc: "color_from_name16", dynlib: "BearLibTerminal.dll".}
+
+proc color_from_name32*(name: ptr int32): color_t {.importc: "color_from_name32", dynlib: "BearLibTerminal.dll".}
+
+proc color_from_name*(name: cstring): color_t {.inline.} =
+  return color_from_name8(cast[ptr int8](name))
+
+proc color_from_argb*(a, r, g, b: int): int {.inline.} =
+  return ((a shl 24) or (r shl 16) or (g shl 8) or b)
+
+proc terminal_check*(code: int): int {.inline.} =
+  return int terminal_state(code) > 0
