@@ -224,11 +224,19 @@ proc terminal_refresh*() {.noReturn, importc: "terminal_refresh", dynlib: "BearL
 
 proc terminal_clear*() {.noReturn, importc: "terminal_clear", dynlib: "BearLibTerminal.dll".}
 
+# Clear area
+
 proc terminal_clear_area*(x, y, w, h: int) {.noReturn, importc: "terminal_clear_area", dynlib: "BearLibTerminal.dll".}
+
+# Crop
 
 proc terminal_crop*(x, y, w, h: int) {.noReturn, importc: "terminal_crop", dynlib: "BearLibTerminal.dll".}
 
+# Layer
+
 proc terminal_layer*(index: int) {.noReturn, importc: "terminal_layer", dynlib: "BearLibTerminal.dll".}
+
+# Composition
 
 proc terminal_composition*(mode: int) {.noReturn, importc: "terminal_composition", dynlib: "BearLibTerminal.dll".}
 
@@ -288,11 +296,19 @@ proc terminal_measure*(s: cstring): dimensions_t {.inline.} =
 proc terminal_measuref*(s: string, args: varargs[string, `$`]): dimensions_t {.inline.} =
   return terminal_measure(format(s, args))
 
-proc terminal_state*(code: int): int {.importc: "terminal_state", dynlib: "BearLibTerminal.dll".}  
+# Has input
+
+proc terminal_has_input*(): int {.importc: "terminal_has_input", dynlib: "BearLibTerminal.dll".}
+
+# State
+
+proc terminal_state*(code: int): int {.importc: "terminal_state", dynlib: "BearLibTerminal.dll".}
 
 # Peek
 
 proc terminal_peek*(): int {.importc: "terminal_peek", dynlib: "BearLibTerminal.dll".}
+
+# Delay
 
 proc terminal_delay*(value: int) {.noReturn, importc: "terminal_delay", dynlib: "BearLibTerminal.dll".}
 
@@ -324,6 +340,8 @@ proc color_from_name*(name: cstring): color_t {.inline.} =
 
 proc color_from_argb*(a, r, g, b: int): int {.inline.} =
   return ((a shl 24) or (r shl 16) or (g shl 8) or b)
+
+# Check
 
 proc terminal_check*(code: int): int {.inline.} =
   return int terminal_state(code) > 0
