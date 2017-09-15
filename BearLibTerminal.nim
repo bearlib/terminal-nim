@@ -226,6 +226,12 @@ proc terminal_clear*() {.noReturn, importc: "terminal_clear", dynlib: "BearLibTe
 
 proc terminal_clear_area*(x, y, w, h: int) {.noReturn, importc: "terminal_clear_area", dynlib: "BearLibTerminal.dll".}
 
+proc terminal_crop*(x, y, w, h: int) {.noReturn, importc: "terminal_crop", dynlib: "BearLibTerminal.dll".}
+
+proc terminal_layer*(index: int) {.noReturn, importc: "terminal_layer", dynlib: "BearLibTerminal.dll".}
+
+proc terminal_composition*(mode: int) {.noReturn, importc: "terminal_composition", dynlib: "BearLibTerminal.dll".}
+
 # Put
 
 proc terminal_put*(x, y, code: int) {.noReturn, importc: "terminal_put", dynlib: "BearLibTerminal.dll".}
