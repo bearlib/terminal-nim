@@ -268,6 +268,9 @@ proc terminal_print_ext*(x, y, w, h, align: int; s: cstring): dimensions_t {.dis
 proc terminal_print*(x, y: int; s: cstring): dimensions_t {.discardable, inline.} =
   return terminal_print_ext(x, y, 0, 0, TK_ALIGN_DEFAULT, s)
 
+proc terminal_print*(x, y, align: int; s: cstring): dimensions_t {.discardable, inline.} =
+  return terminal_print_ext(x, y, 0, 0, align, s)
+
 proc terminal_printf*(x, y: int, s: string, args: varargs[string, `$`]): dimensions_t {.discardable, inline.} =
   return terminal_print(x, y, format(s, args))
 
