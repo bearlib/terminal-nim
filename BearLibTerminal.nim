@@ -246,6 +246,14 @@ proc terminal_put*(x, y, code: int) {.noReturn, importc: "terminal_put", dynlib:
 
 proc terminal_put_ext*(x, y, dx, dy, code: int; corners: ptr color_t) {.noReturn, importc: "terminal_put_ext", dynlib: "BearLibTerminal.dll".}
 
+# Pick
+
+proc terminal_pick*(x, y, index: int): int {.importc: "terminal_pick", dynlib: "BearLibTerminal.dll".}
+
+proc terminal_pick_color*(x, y, index: int): color_t {.importc: "terminal_pick_color", dynlib: "BearLibTerminal.dll".}
+
+proc terminal_pick_bkcolor*(x, y: int): color_t {.importc: "terminal_pick_bkcolor", dynlib: "BearLibTerminal.dll".}
+
 # Print
 
 proc terminal_print_ext8*(x, y, w, h, align: int; value: ptr int8; out_w, out_h: ptr int) {.importc: "terminal_print_ext8", dynlib: "BearLibTerminal.dll".}
