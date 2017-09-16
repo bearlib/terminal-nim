@@ -196,19 +196,19 @@ type
 
 # Open
 
-proc terminal_open*(): int {.discardable, importc: "terminal_open", dynlib: "BearLibTerminal.dll".}
+proc terminal_open*(): int {.discardable, cdecl, importc: "terminal_open", dynlib: "BearLibTerminal.dll".}
 
 # Close
 
-proc terminal_close*() {.noReturn, importc: "terminal_close", dynlib: "BearLibTerminal.dll".}
+proc terminal_close*() {.noReturn, cdecl, importc: "terminal_close", dynlib: "BearLibTerminal.dll".}
 
 # Set
 
-proc terminal_set8*(value: ptr int8): int {.importc: "terminal_set8", dynlib: "BearLibTerminal.dll".}
+proc terminal_set8*(value: ptr int8): int {.cdecl, importc: "terminal_set8", dynlib: "BearLibTerminal.dll".}
 
-proc terminal_set16*(value: ptr int16): int {.importc: "terminal_set16", dynlib: "BearLibTerminal.dll".}
+proc terminal_set16*(value: ptr int16): int {.cdecl, importc: "terminal_set16", dynlib: "BearLibTerminal.dll".}
 
-proc terminal_set32*(value: ptr int32): int {.importc: "terminal_set32", dynlib: "BearLibTerminal.dll".}
+proc terminal_set32*(value: ptr int32): int {.cdecl, importc: "terminal_set32", dynlib: "BearLibTerminal.dll".}
 
 proc terminal_set*(s: cstring): int {.discardable, inline.} =
   return terminal_set8(cast[ptr int8](s))
@@ -218,49 +218,49 @@ proc terminal_setf*(s: string, args: varargs[string, `$`]): int {.discardable, i
 
 # Refresh
 
-proc terminal_refresh*() {.noReturn, importc: "terminal_refresh", dynlib: "BearLibTerminal.dll".}
+proc terminal_refresh*() {.noReturn, cdecl, importc: "terminal_refresh", dynlib: "BearLibTerminal.dll".}
 
 # Clear
 
-proc terminal_clear*() {.noReturn, importc: "terminal_clear", dynlib: "BearLibTerminal.dll".}
+proc terminal_clear*() {.noReturn, cdecl, importc: "terminal_clear", dynlib: "BearLibTerminal.dll".}
 
 # Clear area
 
-proc terminal_clear_area*(x, y, w, h: int) {.noReturn, importc: "terminal_clear_area", dynlib: "BearLibTerminal.dll".}
+proc terminal_clear_area*(x, y, w, h: int) {.noReturn, cdecl, importc: "terminal_clear_area", dynlib: "BearLibTerminal.dll".}
 
 # Crop
 
-proc terminal_crop*(x, y, w, h: int) {.noReturn, importc: "terminal_crop", dynlib: "BearLibTerminal.dll".}
+proc terminal_crop*(x, y, w, h: int) {.noReturn, cdecl, importc: "terminal_crop", dynlib: "BearLibTerminal.dll".}
 
 # Layer
 
-proc terminal_layer*(index: int) {.noReturn, importc: "terminal_layer", dynlib: "BearLibTerminal.dll".}
+proc terminal_layer*(index: int) {.noReturn, cdecl, importc: "terminal_layer", dynlib: "BearLibTerminal.dll".}
 
 # Composition
 
-proc terminal_composition*(mode: int) {.noReturn, importc: "terminal_composition", dynlib: "BearLibTerminal.dll".}
+proc terminal_composition*(mode: int) {.noReturn, cdecl, importc: "terminal_composition", dynlib: "BearLibTerminal.dll".}
 
 # Put
 
-proc terminal_put*(x, y, code: int) {.noReturn, importc: "terminal_put", dynlib: "BearLibTerminal.dll".}
+proc terminal_put*(x, y, code: int) {.noReturn, cdecl, importc: "terminal_put", dynlib: "BearLibTerminal.dll".}
 
-proc terminal_put_ext*(x, y, dx, dy, code: int; corners: ptr color_t) {.noReturn, importc: "terminal_put_ext", dynlib: "BearLibTerminal.dll".}
+proc terminal_put_ext*(x, y, dx, dy, code: int; corners: ptr color_t) {.noReturn, cdecl, importc: "terminal_put_ext", dynlib: "BearLibTerminal.dll".}
 
 # Pick
 
-proc terminal_pick*(x, y, index: int): int {.importc: "terminal_pick", dynlib: "BearLibTerminal.dll".}
+proc terminal_pick*(x, y, index: int): int {.cdecl, importc: "terminal_pick", dynlib: "BearLibTerminal.dll".}
 
-proc terminal_pick_color*(x, y, index: int): color_t {.importc: "terminal_pick_color", dynlib: "BearLibTerminal.dll".}
+proc terminal_pick_color*(x, y, index: int): color_t {.cdecl, importc: "terminal_pick_color", dynlib: "BearLibTerminal.dll".}
 
-proc terminal_pick_bkcolor*(x, y: int): color_t {.importc: "terminal_pick_bkcolor", dynlib: "BearLibTerminal.dll".}
+proc terminal_pick_bkcolor*(x, y: int): color_t {.cdecl, importc: "terminal_pick_bkcolor", dynlib: "BearLibTerminal.dll".}
 
 # Print
 
-proc terminal_print_ext8*(x, y, w, h, align: int; value: ptr int8; out_w, out_h: ptr int) {.importc: "terminal_print_ext8", dynlib: "BearLibTerminal.dll".}
+proc terminal_print_ext8*(x, y, w, h, align: int; value: ptr int8; out_w, out_h: ptr int) {.cdecl, importc: "terminal_print_ext8", dynlib: "BearLibTerminal.dll".}
 
-proc terminal_print_ext16*(x, y, w, h, align: int; value: ptr int16; out_w, out_h: ptr int) {.importc: "terminal_print_ext16", dynlib: "BearLibTerminal.dll".}
+proc terminal_print_ext16*(x, y, w, h, align: int; value: ptr int16; out_w, out_h: ptr int) {.cdecl, importc: "terminal_print_ext16", dynlib: "BearLibTerminal.dll".}
 
-proc terminal_print_ext32*(x, y, w, h, align: int; value: ptr int32; out_w, out_h: ptr int) {.importc: "terminal_print_ext32", dynlib: "BearLibTerminal.dll".}
+proc terminal_print_ext32*(x, y, w, h, align: int; value: ptr int32; out_w, out_h: ptr int) {.cdecl, importc: "terminal_print_ext32", dynlib: "BearLibTerminal.dll".}
 
 proc terminal_print_ext*(x, y, w, h, align: int; s: cstring): dimensions_t {.discardable, inline.} =
   terminal_print_ext8(x, y, w, h, align, cast[ptr int8](s), addr(result.width), addr(result.height))
@@ -279,24 +279,24 @@ proc terminal_printf_ext*(x, y, w, h, align: int, s: string, args: varargs[strin
 
 # Read
 
-proc terminal_read*(): int {.importc: "terminal_read", dynlib: "BearLibTerminal.dll".}
+proc terminal_read*(): int {.cdecl, importc: "terminal_read", dynlib: "BearLibTerminal.dll".}
 
-proc terminal_read_str8*(x, y: int; value: ptr int8; max: int): int {.importc: "terminal_read_str8", dynlib: "BearLibTerminal.dll".}
+proc terminal_read_str8*(x, y: int; value: ptr int8; max: int): int {.cdecl, importc: "terminal_read_str8", dynlib: "BearLibTerminal.dll".}
 
-proc terminal_read_str16*(x, y: int; value: ptr int16; max: int): int {.importc: "terminal_read_str16", dynlib: "BearLibTerminal.dll".}
+proc terminal_read_str16*(x, y: int; value: ptr int16; max: int): int {.cdecl, importc: "terminal_read_str16", dynlib: "BearLibTerminal.dll".}
 
-proc terminal_read_str32*(x, y: int; value: ptr int32; max: int): int {.importc: "terminal_read_str32", dynlib: "BearLibTerminal.dll".}
+proc terminal_read_str32*(x, y: int; value: ptr int32; max: int): int {.cdecl, importc: "terminal_read_str32", dynlib: "BearLibTerminal.dll".}
 
 proc terminal_read_str*(x, y: int; s: cstring; max: int): int {.inline.} =
   return terminal_read_str8(x, y, cast[ptr int8](s), max)
 
 # Measure
 
-proc terminal_measure_ext8*(w, h: int; value: ptr int8; out_w, out_h: ptr int) {.importc: "terminal_measure_ext8", dynlib: "BearLibTerminal.dll".}
+proc terminal_measure_ext8*(w, h: int; value: ptr int8; out_w, out_h: ptr int) {.cdecl, importc: "terminal_measure_ext8", dynlib: "BearLibTerminal.dll".}
 
-proc terminal_measure_ext16*(w, h: int; value: ptr int16; out_w, out_h: ptr int) {.importc: "terminal_measure_ext16", dynlib: "BearLibTerminal.dll".}
+proc terminal_measure_ext16*(w, h: int; value: ptr int16; out_w, out_h: ptr int) {.cdecl, importc: "terminal_measure_ext16", dynlib: "BearLibTerminal.dll".}
 
-proc terminal_measure_ext32*(w, h: int; value: ptr int32; out_w, out_h: ptr int) {.importc: "terminal_measure_ext32", dynlib: "BearLibTerminal.dll".}
+proc terminal_measure_ext32*(w, h: int; value: ptr int32; out_w, out_h: ptr int) {.cdecl, importc: "terminal_measure_ext32", dynlib: "BearLibTerminal.dll".}
 
 proc terminal_measure_ext*(w, h: int, s: cstring): dimensions_t {.inline.} =
   terminal_measure_ext8(w, h, cast[ptr int8](s), addr(result.width), addr(result.height))
@@ -309,42 +309,42 @@ proc terminal_measuref*(s: string, args: varargs[string, `$`]): dimensions_t {.i
 
 # Has input
 
-proc terminal_has_input*(): int {.importc: "terminal_has_input", dynlib: "BearLibTerminal.dll".}
+proc terminal_has_input*(): int {.cdecl, importc: "terminal_has_input", dynlib: "BearLibTerminal.dll".}
 
 # State
 
-proc terminal_state*(code: int): int {.importc: "terminal_state", dynlib: "BearLibTerminal.dll".}
+proc terminal_state*(code: int): int {.cdecl, importc: "terminal_state", dynlib: "BearLibTerminal.dll".}
 
 # Peek
 
-proc terminal_peek*(): int {.importc: "terminal_peek", dynlib: "BearLibTerminal.dll".}
+proc terminal_peek*(): int {.cdecl, importc: "terminal_peek", dynlib: "BearLibTerminal.dll".}
 
 # Delay
 
-proc terminal_delay*(value: int) {.noReturn, importc: "terminal_delay", dynlib: "BearLibTerminal.dll".}
+proc terminal_delay*(value: int) {.noReturn, cdecl, importc: "terminal_delay", dynlib: "BearLibTerminal.dll".}
 
 # Get
 
-proc terminal_get8*(key, def: ptr int8): ptr int8 {.importc: "terminal_get8", dynlib: "BearLibTerminal.dll".}
+proc terminal_get8*(key, def: ptr int8): ptr int8 {.cdecl, importc: "terminal_get8", dynlib: "BearLibTerminal.dll".}
 
-proc terminal_get16*(key, def: ptr int16): ptr int16 {.importc: "terminal_get16", dynlib: "BearLibTerminal.dll".}
+proc terminal_get16*(key, def: ptr int16): ptr int16 {.cdecl, importc: "terminal_get16", dynlib: "BearLibTerminal.dll".}
 
-proc terminal_get32*(key, def: ptr int32): ptr int32 {.importc: "terminal_get32", dynlib: "BearLibTerminal.dll".}
+proc terminal_get32*(key, def: ptr int32): ptr int32 {.cdecl, importc: "terminal_get32", dynlib: "BearLibTerminal.dll".}
 
 proc terminal_get*(key: cstring; default: cstring = cast[cstring](0)): cstring {.inline.} =
   return cast[cstring](terminal_get8(cast[ptr int8](key), cast[ptr int8](default)))
 
 # Color
 
-proc terminal_color*(color: color_t) {.noReturn, importc: "terminal_color", dynlib: "BearLibTerminal.dll".}
+proc terminal_color*(color: color_t) {.noReturn, cdecl, importc: "terminal_color", dynlib: "BearLibTerminal.dll".}
 
-proc terminal_bkcolor*(color: color_t) {.noReturn, importc: "terminal_bkcolor", dynlib: "BearLibTerminal.dll".}
+proc terminal_bkcolor*(color: color_t) {.noReturn, cdecl, importc: "terminal_bkcolor", dynlib: "BearLibTerminal.dll".}
 
-proc color_from_name8*(name: ptr int8): color_t {.importc: "color_from_name8", dynlib: "BearLibTerminal.dll".}
+proc color_from_name8*(name: ptr int8): color_t {.cdecl, importc: "color_from_name8", dynlib: "BearLibTerminal.dll".}
 
-proc color_from_name16*(name: ptr int16): color_t {.importc: "color_from_name16", dynlib: "BearLibTerminal.dll".}
+proc color_from_name16*(name: ptr int16): color_t {.cdecl, importc: "color_from_name16", dynlib: "BearLibTerminal.dll".}
 
-proc color_from_name32*(name: ptr int32): color_t {.importc: "color_from_name32", dynlib: "BearLibTerminal.dll".}
+proc color_from_name32*(name: ptr int32): color_t {.cdecl, importc: "color_from_name32", dynlib: "BearLibTerminal.dll".}
 
 proc color_from_name*(name: cstring): color_t {.inline.} =
   return color_from_name8(cast[ptr int8](name))
