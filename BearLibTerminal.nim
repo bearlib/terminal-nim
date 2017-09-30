@@ -361,7 +361,7 @@ proc color_from_name32*(name: ptr int32): color_t {.cdecl, importc: "color_from_
 proc color_from_name*(name: cstring): color_t {.inline.} =
   return color_from_name8(cast[ptr int8](name))
 
-proc color_from_argb*(a, r, g, b: int): int {.inline.} =
+proc color_from_argb*(a, r, g, b: uint8): color_t {.inline.} =
   return ((a shl 24) or (r shl 16) or (g shl 8) or b)
 
 # Check
