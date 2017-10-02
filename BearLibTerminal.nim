@@ -216,17 +216,17 @@ proc terminal_close*() {.noReturn, cdecl, importc: "terminal_close", dynlib: lib
 
 # Set
 
-proc terminal_set8*(value: ptr int8): int {.cdecl, importc: "terminal_set8", dynlib: lib.}
+proc terminal_set8*(options: ptr int8): int {.cdecl, importc: "terminal_set8", dynlib: lib.}
 
-proc terminal_set16*(value: ptr int16): int {.cdecl, importc: "terminal_set16", dynlib: lib.}
+proc terminal_set16*(options: ptr int16): int {.cdecl, importc: "terminal_set16", dynlib: lib.}
 
-proc terminal_set32*(value: ptr int32): int {.cdecl, importc: "terminal_set32", dynlib: lib.}
+proc terminal_set32*(options: ptr int32): int {.cdecl, importc: "terminal_set32", dynlib: lib.}
 
-proc terminal_set*(s: cstring): int {.discardable, inline.} =
-  return terminal_set8(cast[ptr int8](s))
+proc terminal_set*(options: cstring): int {.discardable, inline.} =
+  return terminal_set8(cast[ptr int8](options))
 
-proc terminal_setf*(s: string, args: varargs[string, `$`]): int {.discardable, inline.} =
-  result = terminal_set(format(s, args))
+proc terminal_setf*(options: string, args: varargs[string, `$`]): int {.discardable, inline.} =
+  result = terminal_set(format(options, args))
 
 # Refresh
 
@@ -238,11 +238,11 @@ proc terminal_clear*() {.noReturn, cdecl, importc: "terminal_clear", dynlib: lib
 
 # Clear area
 
-proc terminal_clear_area*(x, y, w, h: int) {.noReturn, cdecl, importc: "terminal_clear_area", dynlib: lib.}
+proc terminal_clear_area*(x, y, width, height: int) {.noReturn, cdecl, importc: "terminal_clear_area", dynlib: lib.}
 
 # Crop
 
-proc terminal_crop*(x, y, w, h: int) {.noReturn, cdecl, importc: "terminal_crop", dynlib: lib.}
+proc terminal_crop*(x, y, width, height: int) {.noReturn, cdecl, importc: "terminal_crop", dynlib: lib.}
 
 # Layer
 
