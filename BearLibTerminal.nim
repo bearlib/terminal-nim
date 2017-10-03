@@ -268,14 +268,14 @@ proc terminal_pick_bkcolor*(x, y: int): color_t {.cdecl, importc: "terminal_pick
 
 # Print
 
-proc terminal_print_ext8*(x, y, w, h, alignment: int; value: ptr int8; out_w, out_h: ptr int) {.cdecl, importc: "terminal_print_ext8", dynlib: lib.}
+proc terminal_print_ext8*(x, y, width, height, alignment: int; value: ptr int8; out_w, out_h: ptr int) {.cdecl, importc: "terminal_print_ext8", dynlib: lib.}
 
-proc terminal_print_ext16*(x, y, w, h, alignment: int; value: ptr int16; out_w, out_h: ptr int) {.cdecl, importc: "terminal_print_ext16", dynlib: lib.}
+proc terminal_print_ext16*(x, y, width, height, alignment: int; value: ptr int16; out_w, out_h: ptr int) {.cdecl, importc: "terminal_print_ext16", dynlib: lib.}
 
-proc terminal_print_ext32*(x, y, w, h, alignment: int; value: ptr int32; out_w, out_h: ptr int) {.cdecl, importc: "terminal_print_ext32", dynlib: lib.}
+proc terminal_print_ext32*(x, y, width, height, alignment: int; value: ptr int32; out_w, out_h: ptr int) {.cdecl, importc: "terminal_print_ext32", dynlib: lib.}
 
-proc terminal_print_ext*(x, y, w, h, alignment: int; s: cstring): dimensions_t {.discardable, inline.} =
-  terminal_print_ext8(x, y, w, h, alignment, cast[ptr int8](s), addr(result.width), addr(result.height))
+proc terminal_print_ext*(x, y, width, height, alignment: int; s: cstring): dimensions_t {.discardable, inline.} =
+  terminal_print_ext8(x, y, width, height, alignment, cast[ptr int8](s), addr(result.width), addr(result.height))
   
 proc terminal_print*(x, y: int; s: cstring): dimensions_t {.discardable, inline.} =
   return terminal_print_ext(x, y, 0, 0, TK_alignment_DEFAULT, s)
@@ -286,8 +286,8 @@ proc terminal_print*(x, y, alignment: int; s: cstring): dimensions_t {.discardab
 proc terminal_printf*(x, y: int, s: string, args: varargs[string, `$`]): dimensions_t {.discardable, inline.} =
   return terminal_print(x, y, format(s, args))
 
-proc terminal_printf_ext*(x, y, w, h, alignment: int, s: string, args: varargs[string, `$`]): dimensions_t {.discardable, inline.} =
-  return terminal_print_ext(x, y, w, h, alignment, format(s, args))
+proc terminal_printf_ext*(x, y, width, height, alignment: int, s: string, args: varargs[string, `$`]): dimensions_t {.discardable, inline.} =
+  return terminal_print_ext(x, y, width, height, alignment, format(s, args))
 
 # Read
 
@@ -304,20 +304,20 @@ proc terminal_read_str*(x, y: int; s: cstring; max: int): int {.inline.} =
 
 # Measure
 
-proc terminal_measure_ext8*(w, h: int; value: ptr int8; out_w, out_h: ptr int) {.cdecl, importc: "terminal_measure_ext8", dynlib: lib.}
+proc terminal_measure_ext8*(width, height: int; value: ptr int8; out_w, out_h: ptr int) {.cdecl, importc: "terminal_measure_ext8", dynlib: lib.}
 
-proc terminal_measure_ext16*(w, h: int; value: ptr int16; out_w, out_h: ptr int) {.cdecl, importc: "terminal_measure_ext16", dynlib: lib.}
+proc terminal_measure_ext16*(width, height: int; value: ptr int16; out_w, out_h: ptr int) {.cdecl, importc: "terminal_measure_ext16", dynlib: lib.}
 
-proc terminal_measure_ext32*(w, h: int; value: ptr int32; out_w, out_h: ptr int) {.cdecl, importc: "terminal_measure_ext32", dynlib: lib.}
+proc terminal_measure_ext32*(width, height: int; value: ptr int32; out_w, out_h: ptr int) {.cdecl, importc: "terminal_measure_ext32", dynlib: lib.}
 
-proc terminal_measure_ext*(w, h: int, s: cstring): dimensions_t {.inline.} =
-  terminal_measure_ext8(w, h, cast[ptr int8](s), addr(result.width), addr(result.height))
+proc terminal_measure_ext*(width, height: int, s: cstring): dimensions_t {.inline.} =
+  terminal_measure_ext8(width, height, cast[ptr int8](s), addr(result.width), addr(result.height))
 
-proc terminal_measure*(s: cstring): dimensions_t {.inline.} =
-  return terminal_measure_ext(0, 0, s)
+proc terminal_measure*(value: cstring): dimensions_t {.inline.} =
+  return terminal_measure_ext(0, 0, value)
 
-proc terminal_measuref*(s: string, args: varargs[string, `$`]): dimensions_t {.inline.} =
-  return terminal_measure(format(s, args))
+proc terminal_measuref*(value: string, args: varargs[string, `$`]): dimensions_t {.inline.} =
+  return terminal_measure(format(value, args))
 
 # Has input
 
@@ -337,11 +337,11 @@ proc terminal_delay*(value: int) {.noReturn, cdecl, importc: "terminal_delay", d
 
 # Get
 
-proc terminal_get8*(key, def: ptr int8): ptr int8 {.cdecl, importc: "terminal_get8", dynlib: lib.}
+proc terminal_get8*(key, default: ptr int8): ptr int8 {.cdecl, importc: "terminal_get8", dynlib: lib.}
 
-proc terminal_get16*(key, def: ptr int16): ptr int16 {.cdecl, importc: "terminal_get16", dynlib: lib.}
+proc terminal_get16*(key, default: ptr int16): ptr int16 {.cdecl, importc: "terminal_get16", dynlib: lib.}
 
-proc terminal_get32*(key, def: ptr int32): ptr int32 {.cdecl, importc: "terminal_get32", dynlib: lib.}
+proc terminal_get32*(key, default: ptr int32): ptr int32 {.cdecl, importc: "terminal_get32", dynlib: lib.}
 
 proc terminal_get*(key: cstring; default: cstring = cast[cstring](0)): cstring {.inline.} =
   return cast[cstring](terminal_get8(cast[ptr int8](key), cast[ptr int8](default)))
