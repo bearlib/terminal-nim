@@ -188,16 +188,16 @@ const
   TK_INPUT_NONE*      =    0
   TK_INPUT_CANCELLED* =   -1
 
-# Text printing alignment.
+# Text printing alignmentment.
 
 const
-  TK_ALIGN_DEFAULT*   =    0
-  TK_ALIGN_LEFT*      =    1
-  TK_ALIGN_RIGHT*     =    2
-  TK_ALIGN_CENTER*    =    3
-  TK_ALIGN_TOP*       =    4
-  TK_ALIGN_BOTTOM*    =    8
-  TK_ALIGN_MIDDLE*    =   12
+  TK_alignment_DEFAULT*   =    0
+  TK_alignment_LEFT*      =    1
+  TK_alignment_RIGHT*     =    2
+  TK_alignment_CENTER*    =    3
+  TK_alignment_TOP*       =    4
+  TK_alignment_BOTTOM*    =    8
+  TK_alignment_MIDDLE*    =   12
 
 type
   color_t* = uint32
@@ -268,26 +268,26 @@ proc terminal_pick_bkcolor*(x, y: int): color_t {.cdecl, importc: "terminal_pick
 
 # Print
 
-proc terminal_print_ext8*(x, y, w, h, align: int; value: ptr int8; out_w, out_h: ptr int) {.cdecl, importc: "terminal_print_ext8", dynlib: lib.}
+proc terminal_print_ext8*(x, y, w, h, alignment: int; value: ptr int8; out_w, out_h: ptr int) {.cdecl, importc: "terminal_print_ext8", dynlib: lib.}
 
-proc terminal_print_ext16*(x, y, w, h, align: int; value: ptr int16; out_w, out_h: ptr int) {.cdecl, importc: "terminal_print_ext16", dynlib: lib.}
+proc terminal_print_ext16*(x, y, w, h, alignment: int; value: ptr int16; out_w, out_h: ptr int) {.cdecl, importc: "terminal_print_ext16", dynlib: lib.}
 
-proc terminal_print_ext32*(x, y, w, h, align: int; value: ptr int32; out_w, out_h: ptr int) {.cdecl, importc: "terminal_print_ext32", dynlib: lib.}
+proc terminal_print_ext32*(x, y, w, h, alignment: int; value: ptr int32; out_w, out_h: ptr int) {.cdecl, importc: "terminal_print_ext32", dynlib: lib.}
 
-proc terminal_print_ext*(x, y, w, h, align: int; s: cstring): dimensions_t {.discardable, inline.} =
-  terminal_print_ext8(x, y, w, h, align, cast[ptr int8](s), addr(result.width), addr(result.height))
+proc terminal_print_ext*(x, y, w, h, alignment: int; s: cstring): dimensions_t {.discardable, inline.} =
+  terminal_print_ext8(x, y, w, h, alignment, cast[ptr int8](s), addr(result.width), addr(result.height))
   
 proc terminal_print*(x, y: int; s: cstring): dimensions_t {.discardable, inline.} =
-  return terminal_print_ext(x, y, 0, 0, TK_ALIGN_DEFAULT, s)
+  return terminal_print_ext(x, y, 0, 0, TK_alignment_DEFAULT, s)
 
-proc terminal_print*(x, y, align: int; s: cstring): dimensions_t {.discardable, inline.} =
-  return terminal_print_ext(x, y, 0, 0, align, s)
+proc terminal_print*(x, y, alignment: int; s: cstring): dimensions_t {.discardable, inline.} =
+  return terminal_print_ext(x, y, 0, 0, alignment, s)
 
 proc terminal_printf*(x, y: int, s: string, args: varargs[string, `$`]): dimensions_t {.discardable, inline.} =
   return terminal_print(x, y, format(s, args))
 
-proc terminal_printf_ext*(x, y, w, h, align: int, s: string, args: varargs[string, `$`]): dimensions_t {.discardable, inline.} =
-  return terminal_print_ext(x, y, w, h, align, format(s, args))
+proc terminal_printf_ext*(x, y, w, h, alignment: int, s: string, args: varargs[string, `$`]): dimensions_t {.discardable, inline.} =
+  return terminal_print_ext(x, y, w, h, alignment, format(s, args))
 
 # Read
 
